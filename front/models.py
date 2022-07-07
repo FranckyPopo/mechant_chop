@@ -6,7 +6,7 @@ class SiteInfo(models.Model):
     email = models.EmailField()
     address = models.CharField(max_length=150) 
     message = models.CharField(max_length=150) 
-    copyright_  = models.CharField(max_length=150, verbose="copyright") 
+    copyright  = models.CharField(max_length=150, verbose_name="copyright") 
     
     link_facebook = models.URLField(blank=True)
     link_instagram = models.URLField(blank=True)
@@ -17,4 +17,3 @@ class SiteInfo(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
-    

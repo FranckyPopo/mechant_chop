@@ -1,10 +1,9 @@
 from django.db import models
 from colorfield.fields import ColorField
 
-
 class Brand(models.Model):
     name = models.CharField(max_length=150)
-    image = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField()
     active = models.BooleanField(default=True)
     
     date_create = models.DateTimeField(auto_now_add=True)
@@ -50,9 +49,9 @@ class Product(models.Model):
     name = models.CharField(max_length=150) 
     description = models.CharField(max_length=1000)
 
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
-    size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    color = models.ForeignKey(Color, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="product_brand")
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, related_name="product_size")
+    color = models.ForeignKey(Color, on_delete=models.CASCADE, related_name="product_color")
 
     price = models.PositiveIntegerField(default=0)
     promotion_percentage = models.PositiveIntegerField(blank=True, null=True)
@@ -66,7 +65,7 @@ class Product(models.Model):
     date_delete = models.BooleanField(default=False)
 
 class ImageProduct(models.Model):
-    image = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")
 
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
