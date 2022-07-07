@@ -10,13 +10,20 @@ class Brand(models.Model):
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
     
+    def __str__(self):
+        return self.name
+    
 class Category(models.Model):
     name = models.CharField(max_length=150) 
     active = models.BooleanField(default=True)
+    image = models.ImageField()
     
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.name
     
 class GlobalSold(models.Model):
     name = models.CharField(max_length=150)
@@ -28,6 +35,9 @@ class GlobalSold(models.Model):
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
     
+    def __str__(self):
+        return self.name
+    
 class Size(models.Model):
     name = models.CharField(max_length=150)
     active = models.BooleanField(default=True)
@@ -35,6 +45,9 @@ class Size(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.name
     
 class Color(models.Model):
     name = models.CharField(max_length=150)
@@ -44,6 +57,9 @@ class Color(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
     
 class Product(models.Model):
     name = models.CharField(max_length=150) 
@@ -66,6 +82,9 @@ class Product(models.Model):
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 class ImageProduct(models.Model):
     image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")
 
@@ -79,4 +98,7 @@ class NewsLater(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.email
     
