@@ -48,6 +48,8 @@ class Color(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=150) 
     description = models.CharField(max_length=1000)
+    first_photo = models.ImageField()
+    second_photo = models.ImageField()
 
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="product_brand")
     size = models.ForeignKey(Size, on_delete=models.CASCADE, related_name="product_size")
