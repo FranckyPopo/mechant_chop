@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def front_contact(request):
+    return render(request, "front/pages/contact.html")
