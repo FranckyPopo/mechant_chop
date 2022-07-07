@@ -1,6 +1,8 @@
-- Crée les différent models [x]
-- Crée un models user [x]
-- Intégrer les templates au projet [] 
-- Ajouter les dependences au fichier requirements [x]
+- Crée un fichier base.html []
+- Ajouter les models dans l'administration []
+- dynamiser la page d'acceuil []
+- Ajouter les produits sélection dans le panier []
+
+
 - Voir jaheim pour le model global []
 - Demander a patrick si on dois crée une sous catégorie pour les celle qui existes déjà []
