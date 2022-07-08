@@ -63,7 +63,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading text-center">
-                        <h2>Popular Products</h2>
+                        <h2>{{ request.context }}</h2>
                     </div>
                 </div>
             </div>
@@ -101,7 +101,7 @@
                                             <input type="hidden" name="pk" value="{{ product.pk }}">
                                             <div class="add-to-cart-btn"
                                                 hx-post="{% url 'shop_cart' %}"
-                                                hx-swap="none"
+                                                hx-swap="innerHTML"
                                                 hx-target=".cart-list"
                                                 hx-trigger="click">
                                                 <a href="#" >

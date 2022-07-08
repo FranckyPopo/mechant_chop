@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import HttpResponse
+from django.template.loader import render_to_string
+
 import json
 
 from shop import models
@@ -9,47 +11,31 @@ class Cart(View):
     template_name = "shop/pages/index.html"
     
     def post(self, request):
-        context = {}
-        pk = int(request.POST.get("pk"))
-        cart = request.COOKIES.get("cart")
+        # Récpération du pk du produit ajouter dans le panier
+        product_pk = int(request.POST.get("pk"))
+        session_id = request.session._get_or_create_session_key()
+        quantity = 1
+        product = models.Product.objects.get(pk=product_pk)
         
-        if cart:
-            cart = cart.replace("\'", "\"")
-            cart = json.loads(cart)
-            
-            # On Ajoute un 
-            for item in cart:
-                if item["pk"] == pk:
-                    item["quantity"] += 1
-                    break
-                else:
-                    product = {
-                        "pk": pk,
-                        "quantity": 1
-                    }
-                    cart.append(product)
-                    break
-        else:
-            cart = [
-               {
-                   "pk": pk,
-                   "quantity": 1
-               } 
-            ]
-        context["cart"] = cart
-        response = render(request, self.template_name, context=context)
-        response.set_cookie(key="cart", value=json.dumps(cart))
+        # Création du panier de l'utilisateur
+        models.OrderItem.objects.create(
+            session_id=session_id, 
+            product=product, 
+            quantity=quantity
+        )
         
-        return response
+        cart = models.OrderItem.objects.filter(session_id=session_id)
+        r = render_to_string("shop/pages/cart-list.html", context={"cart": cart})
+                
+        return HttpResponse(r)
 
 def shop_index(request):
-    cart = None
-    if request.COOKIES.get("cart"):
-        cart = json.loads(request.COOKIES.get("cart").replace("\'", "\""))
+    session_id = request.session._get_or_create_session_key()
+    cart = models.OrderItem.objects.filter(session_id=session_id)
     data = {
-        "brands": models.Brand.objects.all().filter(active=True),
         "cart": cart,
     }
+    
     
     return render(request, "shop/pages/index.html", context=data)
 

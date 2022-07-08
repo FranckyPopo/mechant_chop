@@ -33,3 +33,7 @@ class ImageProduct(admin.ModelAdmin):
 @admin.register(models.NewsLater)
 class NewsLater(admin.ModelAdmin):
     list_display = ["email", "date_create", "date_update"]
+    
+@admin.register(models.OrderItem)
+class OrderItem(admin.ModelAdmin):
+    list_display = ["session_id", "date_create", "date_update"]
