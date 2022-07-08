@@ -93,7 +93,7 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="  {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span>3</span></a>
+                    <a href="#" id="essenceCartBtn"><img src="  {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span> {{ cart|length }} </span></a>
                 </div>
             </div>
 
@@ -108,7 +108,7 @@
 
         <!-- Cart Button -->
         <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src=" {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span>3</span></a>
+            <a href="#" id="rightSideCart"><img src=" {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span> {{ cart|length }} </span></a>
         </div>
 
         <div class="cart-content d-flex">
@@ -116,7 +116,6 @@
             <!-- Cart List Area -->
             <div class="cart-list" id="l">
                 <!-- Single Cart Item -->
-                {{ cart|length }}
                 {% include "shop/pages/cart-list.html" with cart=cart %}
             </div>
 

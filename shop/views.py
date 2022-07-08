@@ -24,10 +24,30 @@ class Cart(View):
             quantity=quantity
         )
         
-        cart = models.OrderItem.objects.filter(session_id=session_id)
+        cart = list(models.OrderItem.objects.filter(session_id=session_id))
+        print(cart)   
+        
         r = render_to_string("shop/pages/cart-list.html", context={"cart": cart})
                 
         return HttpResponse(r)
+    
+    
+    def order(self, querysets: list):
+        new_queryset = []
+                
+        for queryset in querysets:
+            for item in new_queryset:
+                if str(item.product.name) == str(queryset.product.name):
+                    print("oui le produit existe")
+                    item.quantity += queryset.quantity
+                else:
+                    new_queryset.append(queryset)
+                    print("le produit n'existe")
+        else:
+            new_queryset.append(queryset)
+            print("premier produit ajouté")
+        print(new_queryset)
+        return new_queryset
 
 def shop_index(request):
     session_id = request.session._get_or_create_session_key()

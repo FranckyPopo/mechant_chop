@@ -1,6 +1,8 @@
 from django.db import models
 from colorfield.fields import ColorField
 
+from pprint import pprint
+
 class Brand(models.Model):
     name = models.CharField(max_length=150)
     image = models.ImageField()
@@ -117,6 +119,11 @@ class OrderItem(models.Model):
     
     def __str__(self) -> str:
         return self.session_id
+    
+    
+            
+        
+        
     
     
     
