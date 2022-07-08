@@ -18,6 +18,10 @@ class GlobalSold(admin.ModelAdmin):
 class Size(admin.ModelAdmin):
     list_display = ["name", "active", "date_create", "date_update"]
     
+@admin.register(models.Color)
+class Color(admin.ModelAdmin):
+    list_display = ["name", "code", "active", "date_create", "date_update"]
+    
 @admin.register(models.Product)
 class Product(admin.ModelAdmin):
     list_display = ["name", "brand", "date_create", "date_update"]

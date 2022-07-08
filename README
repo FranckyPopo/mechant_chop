@@ -1,8 +1,13 @@
 - Crée un fichier base.html [x]
 - Ajouter les models dans l'administration [x]
-- dynamiser la page d'acceuil []
+- dynamiser la page d'acceuil [x]
 - Ajouter les produits sélection dans le panier []
 
+- Chercher comment faire une pagination
+- Modifier le champ description du model product en textField 
+- Modifier le champ color du model product en ManyToManyField
 
 - Voir jaheim pour le model global []
 - Demander a patrick si on dois crée une sous catégorie pour les celle qui existes déjà []
+
+

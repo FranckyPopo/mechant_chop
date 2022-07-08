@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{% static 'shop/css/core-style.css' %} ">
     <link rel="stylesheet" href="{% static 'shop/css/style.css' %} ">
 
+    <!-- Htmx -->
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
 </head>
 
 <body>
@@ -112,54 +114,10 @@
         <div class="cart-content d-flex">
 
             <!-- Cart List Area -->
-            <div class="cart-list">
+            <div class="cart-list" id="l">
                 <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src=" {% static 'shop/img/product-img/product-1.jpg' %}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src=" {% static 'shop/img/product-img/product-2.jpg' %}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src=" {% static 'shop/img/product-img/product-2.jpg' %}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
+                {{ cart|length }}
+                {% include "shop/pages/cart-list.html" with cart=cart %}
             </div>
 
             <!-- Cart Summary -->

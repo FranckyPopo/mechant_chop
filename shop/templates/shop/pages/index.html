@@ -90,16 +90,25 @@
                                 <div class="product-description">
                                     <span>{{ product.band }}</span>
                                     <a href="single-product-details.html">
-                                        <h6>{{ product.name }}</h6>
+                                        <h6 id="ppp">{{ product.name }}</h6>
                                     </a>
                                     <p class="product-price">{{ product.price }} XOF</p>
-
                                     <!-- Hover Content -->
                                     <div class="hover-content">
                                         <!-- Add to Cart -->
-                                        <div class="add-to-cart-btn">
-                                            <a href="#" class="btn essence-btn">Add to Cart</a>
-                                        </div>
+                                        <form method="post" class="btn essence-btn">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="pk" value="{{ product.pk }}">
+                                            <div class="add-to-cart-btn"
+                                                hx-post="{% url 'shop_cart' %}"
+                                                hx-swap="none"
+                                                hx-target=".cart-list"
+                                                hx-trigger="click">
+                                                <a href="#" >
+                                                    Ajouter au parnier
+                                                </a>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
