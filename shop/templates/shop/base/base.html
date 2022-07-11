@@ -93,7 +93,7 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="  {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span> {{ cart|length }} </span></a>
+                    <a href="#" id="essenceCartBtn"><img src="  {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span id="total_product">{{ utils }}</span></a>
                 </div>
             </div>
 
@@ -108,7 +108,10 @@
 
         <!-- Cart Button -->
         <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src=" {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span> {{ cart|length }} </span></a>
+            <a href="#" id="rightSideCart">
+                <img src=" {% static 'shop/img/core-img/bag.svg' %}" alt="">
+                <span id="total_product">{{ utils }}</span>
+            </a>
         </div>
 
         <div class="cart-content d-flex">
@@ -233,6 +236,12 @@
 <script src="{% static 'shop/js/active.js' %}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwuyLRa1uKNtbgx6xAJVmWy-zADgegA2s"></script>
 <script src="{% static 'shop/js/map-active.js' %}"></script>
+
+<!-- Mon script -->
+<script src="{% static 'shop/js/script.js' %}"></script>
+
+<!-- sweet alert -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>
