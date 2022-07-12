@@ -83,6 +83,22 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+class OrderItem(models.Model):
+    session_id = models.CharField(max_length=150)
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE, 
+        related_name='order_item_product'
+    ) 
+    quantity = models.PositiveIntegerField(default=1)
+    
+    date_create = models.DateTimeField(auto_now_add=True)
+    date_update = models.DateTimeField(auto_now=True)
+    date_delete = models.BooleanField(default=False)
+    
+    def __str__(self) -> str:
+        return self.session_id
 
 class ImageProduct(models.Model):
     image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")
@@ -100,27 +116,3 @@ class NewsLater(models.Model):
     
     def __str__(self):
         return self.email
-    
-class OrderItem(models.Model):
-    session_id = models.CharField(max_length=150)
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE, 
-        related_name='order_item_product'
-    )
-    quantity = models.PositiveIntegerField()
-    
-    date_create = models.DateTimeField(auto_now_add=True)
-    date_update = models.DateTimeField(auto_now=True)
-    date_delete = models.BooleanField(default=False)
-    
-    def __str__(self) -> str:
-        return self.session_id
-    
-    
-            
-        
-        
-    
-    
-    

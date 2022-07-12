@@ -2,15 +2,16 @@
 {% for item in cart %}
     <div class="single-cart-item">
         <a href="#" class="product-image">
-            <img src=" {% static 'shop/img/product-img/product-1.jpg' %}" class="cart-thumb" alt="">
+            <img src="{{ item.product.first_photo.url }}" class="cart-thumb" alt="">
             <!-- Cart Item Desc -->
             <div class="cart-item-desc">
             <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
                 <span class="badge">{{ item.product.brand }}</span>
                 <h6>{{ item.product.name }}</h6>
-                <p class="size">Size: S</p>
-                <p class="color">Color: Red</p>
-                <p class="price">$45.00</p>
+                <p class="size">SIZE: {{ item.product.size }}</p>
+                <p class="color">COLOR: {{ item.product.color }}</p>
+                <p class="color">QUANTITY: {{ item.quantity }}</p>
+                <p class="price">{{ item.product.price}} XOF</p>
             </div>
         </a>
     </div>

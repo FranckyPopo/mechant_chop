@@ -73,6 +73,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'mechant.context_processors.list_category',
                 'mechant.context_processors.list_product',
+                'mechant.context_processors.total_product',
+                'mechant.context_processors.total_price',
             ],
         },
     },
