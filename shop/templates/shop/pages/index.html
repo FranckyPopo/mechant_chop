@@ -100,8 +100,8 @@
                                             {% csrf_token %}
                                             <div class="add-to-cart-btn"
                                                 hx-post="{% url 'shop_add_product_cart' product.pk %}"
-                                                hx-swap="innerHTML"
                                                 hx-target=".cart-list"
+                                                hx-swap="innerHTML"
                                                 hx-trigger="click">
                                                 <a href="#" >
                                                     Ajouter au parnier

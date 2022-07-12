@@ -18,7 +18,6 @@ def total_product(request):
     
 def total_price_cart(request):
     session_id = request.session._get_or_create_session_key()
-    print("//////////", utils.sum_price_cart(session_id))
     return {
         "total_price_cart": utils.sum_price_cart(session_id)
     }

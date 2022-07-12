@@ -12,7 +12,7 @@ class Category(admin.ModelAdmin):
     
 @admin.register(models.GlobalSold)
 class GlobalSold(admin.ModelAdmin):
-    list_display = ["name", "description", "date_create", "date_update"]
+    list_display = ["name", "date_create", "date_update"]
     
 @admin.register(models.Size)
 class Size(admin.ModelAdmin):
