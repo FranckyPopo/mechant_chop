@@ -93,7 +93,10 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="  {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span id="total_product">{{ total_product }}</span></a>
+                    <a href="#" id="essenceCartBtn">
+                        <img src="  {% static 'shop/img/core-img/bag.svg' %}" alt=""> 
+                        <span id="total_product">{{ total_product }}</span>
+                    </a>
                 </div>
             </div>
 
@@ -129,7 +132,7 @@
                 <ul class="summary-table">
                     <li>
                         <span>Total:</span> 
-                        <span>{{ tota_price_cart }}</span>
+                        <span id="tota_price_cart">{{ total_price_cart }} XOF</span>
                     </li>
                     <li>
                         <span>Livraison:</span>

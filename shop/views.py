@@ -32,7 +32,8 @@ class Cart(View):
             headers={
                 "HX-Trigger": json.dumps({
                     "porduct_add": {
-                        "total_product": utils.sum_quantity_cart(session_id)
+                        "total_product": utils.sum_quantity_cart(session_id),
+                        "tota_price_cart": utils.sum_price_cart(session_id),
                     }
                 })
             }
