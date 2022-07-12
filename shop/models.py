@@ -28,10 +28,7 @@ class Category(models.Model):
         return self.name
     
 class GlobalSold(models.Model):
-    name = models.CharField(max_length=150)
-    description = models.CharField(max_length=1000)
-    promotion_percentage = models.PositiveIntegerField(blank=True, null=True)
-    promotion_price = models.PositiveIntegerField(blank=True, null=True)
+    name = model ice = models.PositiveIntegerField(blank=True, null=True)
     
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
