@@ -93,7 +93,7 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="  {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span id="total_product">{{ utils }}</span></a>
+                    <a href="#" id="essenceCartBtn"><img src="  {% static 'shop/img/core-img/bag.svg' %}" alt=""> <span id="total_product">{{ total_product }}</span></a>
                 </div>
             </div>
 
@@ -109,8 +109,8 @@
         <!-- Cart Button -->
         <div class="cart-button">
             <a href="#" id="rightSideCart">
-                <img src=" {% static 'shop/img/core-img/bag.svg' %}" alt="">
-                <span id="total_product">{{ utils }}</span>
+                <img src="{% static 'shop/img/core-img/bag.svg' %}" alt="">
+                <span id="total_product">{{ total_product }}</span>
             </a>
         </div>
 
@@ -127,10 +127,14 @@
 
                 <h2>Summary</h2>
                 <ul class="summary-table">
-                    <li><span>subtotal:</span> <span>$274.00</span></li>
-                    <li><span>delivery:</span> <span>Free</span></li>
-                    <li><span>discount:</span> <span>-15%</span></li>
-                    <li><span>total:</span> <span>$232.00</span></li>
+                    <li>
+                        <span>Total:</span> 
+                        <span>{{ tota_price_cart }}</span>
+                    </li>
+                    <li>
+                        <span>Livraison:</span>
+                        <span>Gratuite</span>
+                    </li>
                 </ul>
                 <div class="checkout-btn mt-100">
                     <a href="checkout.html" class="btn essence-btn">check out</a>

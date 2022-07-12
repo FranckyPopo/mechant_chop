@@ -5,13 +5,12 @@ from django.template.loader import render_to_string
 
 import json
 
-from shop import models
+from shop import models, utils
 
 class Cart(View):
     template_name = "shop/pages/index.html"
     
     def post(self, request):
-        # Récpération du pk du produit
         product_pk = int(request.POST.get("pk"))
         session_id = request.session._get_or_create_session_key()
         product = models.Product.objects.get(pk=product_pk)
@@ -27,8 +26,17 @@ class Cart(View):
                 
         cart = models.OrderItem.objects.filter(session_id=session_id)
         response = render_to_string("shop/pages/cart-list.html", context={"cart": cart})
-                
-        return HttpResponse(response)
+        
+        return HttpResponse(
+            response,
+            headers={
+                "HX-Trigger": json.dumps({
+                    "porduct_add": {
+                        "total_product": utils.sum_quantity_cart(session_id)
+                    }
+                })
+            }
+        )
 
 
 def shop_index(request):
@@ -37,7 +45,6 @@ def shop_index(request):
     data = {
         "cart": cart,
     }
-    
     
     return render(request, "shop/pages/index.html", context=data)
 

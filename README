@@ -1,7 +1,7 @@
 - Crée un fichier base.html [x]
 - Ajouter les models dans l'administration [x]
 - dynamiser la page d'acceuil [x]
-- Ajouter les produits sélection dans le panier []
+- Ajouter les produits sélection dans le panier [x]
 
 - Chercher comment faire une pagination
 - Modifier le champ description du model product en textField 
@@ -11,3 +11,9 @@
 - Demander a patrick si on dois crée une sous catégorie pour les celle qui existes déjà []
 
 
+- Je veux créé un panier d'achat
+- J'ai les différents produits
+
+- ajouter le produits s'il n'existe pas déjà
+- incrémenter la valeur du produit sélection de plus 1 a chaque nouvelle ajout 
+- Afficher le panier de l'utilisateur 
