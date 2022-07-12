@@ -28,7 +28,7 @@ class Category(models.Model):
         return self.name
     
 class GlobalSold(models.Model):
-    name = model ice = models.PositiveIntegerField(blank=True, null=True)
+    name = models.PositiveIntegerField(blank=True, null=True)
     
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
