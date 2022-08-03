@@ -74,6 +74,7 @@ TEMPLATES = [
                 'mechant.context_processors.list_category',
                 'mechant.context_processors.list_product',
                 'mechant.context_processors.get_total_product_quantity',
+                'mechant.context_processors.cart',
                 'mechant.context_processors.total_price_cart',
             ],
         },

@@ -1,22 +1,48 @@
-from django.db.models import Sum
-from django.contrib.sessions.backends.db import SessionStore
-
-from shop.models import OrderItem
+from shop import models
 
 
-def sum_quantity_cart(session_id) -> int:
-    s = OrderItem.objects.filter(
-        session_id=session_id
-    )
-    return s.aggregate(Sum("quantity"))['quantity__sum'] or 0
-
-
-def sum_price_cart(session_id) -> int:
-    total_price = 0
+def add_to_cart_session(request, product_pk: int) -> None:
+    """Cette fonction va permtre d'ajouter des produits
+    dans un panier via la session de l'utilisateur"""
     
-    for item in OrderItem.objects.filter(session_id=session_id):
-        quantity = item.quantity
-        price = item.product.price
-        total_price += quantity * price
+    if not request.session.session_key: request.session.save()
+    quantity = request.POST.get("quantity", False)
+    cart = request.session.get("cart", False)
         
-    return total_price
+    if quantity:
+        for order in cart:
+            if order["pk"] == product_pk:
+                order["quantity"] = int(quantity)
+                request.session["cart"] = cart
+                break
+    elif cart:
+        for order in cart:
+            if order["pk"] == product_pk:
+                order["quantity"] += 1
+                request.session["cart"] = cart
+                break
+        else:
+            order = {
+                "pk": product_pk,
+                "quantity": 1
+            }
+            cart.append(order)
+            request.session["cart"] = cart
+    elif not cart:
+        request.session["cart"] = [
+            {"pk": product_pk, "quantity": 1}
+        ]
+
+def get_cart_product(request) -> [dict]:
+    """Cette fonction va retourner une liste qui contiendra des
+    disctionnaires qui aurons les clés suivante: product et quantity."""
+    
+    cart_session = request.session.get("cart", [])
+    cart = []
+    for order in cart_session:
+        instance = {
+            "product": models.Product.objects.get(pk=order["pk"]),
+            "quantity": order["quantity"],
+        }
+        cart.append(instance)        
+    return cart
