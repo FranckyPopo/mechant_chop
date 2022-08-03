@@ -98,11 +98,10 @@
                                         <!-- Add to Cart -->
                                         <form method="post" class="btn essence-btn">
                                             {% csrf_token %}
-                                            <input type="hidden" name="pk" value="{{ product.pk }}">
                                             <div class="add-to-cart-btn"
-                                                hx-post="{% url 'shop_cart' %}"
-                                                hx-swap="innerHTML"
+                                                hx-post="{% url 'shop_add_product_cart' product.pk %}"
                                                 hx-target=".cart-list"
+                                                hx-swap="innerHTML"
                                                 hx-trigger="click">
                                                 <a href="#" >
                                                     Ajouter au parnier

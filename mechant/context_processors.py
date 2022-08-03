@@ -10,10 +10,16 @@ def list_product(request):
 
 
 def total_product(request):
+    session_id = request.session._get_or_create_session_key()
     return {
-        "total_product": utils.sum_quantity_cart(request.session._get_or_create_session_key()),
+        "total_product": utils.sum_quantity_cart(session_id)
+    }
+
+    
+def total_price_cart(request):
+    session_id = request.session._get_or_create_session_key()
+    return {
+        "total_price_cart": utils.sum_price_cart(session_id)
     }
 
 
-def total_price(request):
-    return {"tota_price_cart": utils.tota_price_cart()} 

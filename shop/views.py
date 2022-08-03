@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -7,11 +7,11 @@ import json
 
 from shop import models, utils
 
-class Cart(View):
-    template_name = "shop/pages/index.html"
+class ProductAddCart(View):
+    http_method_names = ["post"]
+    template_name = "shop/pages/cart-list.html"
     
-    def post(self, request):
-        product_pk = int(request.POST.get("pk"))
+    def post(self, request, product_pk):
         session_id = request.session._get_or_create_session_key()
         product = models.Product.objects.get(pk=product_pk)
         
@@ -25,19 +25,47 @@ class Cart(View):
             objet.save()
                 
         cart = models.OrderItem.objects.filter(session_id=session_id)
-        response = render_to_string("shop/pages/cart-list.html", context={"cart": cart})
+        response = render_to_string(self.template_name, context={"cart": cart})
         
         return HttpResponse(
             response,
             headers={
                 "HX-Trigger": json.dumps({
-                    "porduct_add": {
-                        "total_product": utils.sum_quantity_cart(session_id)
+                    "product_add": {
+                        "total_product": utils.sum_quantity_cart(session_id),
+                        "tota_price_cart": utils.sum_price_cart(session_id),
                     }
                 })
             }
         )
+    
+    def http_method_not_allowed(self, request):
+        return redirect("shop_index")
+    
+class ProductDeleteCart(View):
+    http_method_names = ["post"]
+    
+    def post(self, request, product_pk):
+        session_id = request.session._get_or_create_session_key()
+        product = models.Product.objects.get(pk=product_pk)
+        cart_delete = models.OrderItem.objects.get(product=product)
+        cart_delete.delete()
+        
+        return HttpResponse(
+            "",
+            headers={
+                "HX-Trigger": json.dumps({
+                    "product_delete": {
+                        "total_product": utils.sum_quantity_cart(session_id),
+                        "tota_price_cart": utils.sum_price_cart(session_id),
+                    }
+                })
+            }
+        )
+        
 
+    def http_method_not_allowed(self, request):
+        return redirect("shop_index")
 
 def shop_index(request):
     session_id = request.session._get_or_create_session_key()
