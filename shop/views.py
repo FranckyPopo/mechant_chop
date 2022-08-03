@@ -5,7 +5,8 @@ from django.template.loader import render_to_string
 
 import json
 
-from shop import models, utils
+from shop import models
+from mechant import context_processors
 
 class ProductAddCart(View):
     http_method_names = ["post"]
@@ -16,13 +17,14 @@ class ProductAddCart(View):
             pass
         else:
             self.add_to_cart_session(request, int(product_pk))
+            total_product_quantity = context_processors.get_total_product_quantity(request)
         
         return HttpResponse(
             "",
             headers={
                 "HX-Trigger": json.dumps({
                     "product_add": {
-                        "total_product": None,
+                        "total_product": total_product_quantity["total_product"],
                         "tota_price_cart": None,
                     }
                 })
