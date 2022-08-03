@@ -1,5 +1,6 @@
 from django.db import models
 from colorfield.fields import ColorField
+from django.conf import settings
 
 from pprint import pprint
 
@@ -86,22 +87,32 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-    
-class OrderItem(models.Model):
-    session_id = models.CharField(max_length=150)
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.CASCADE, 
-        related_name='order_item_product'
-    ) 
+
+# Cart
+class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    ordered = models.BooleanField(default=False)
     
-    date_create = models.DateTimeField(auto_now_add=True)
-    date_update = models.DateTimeField(auto_now=True)
-    date_delete = models.BooleanField(default=False)
+    updated = models.fields.DateTimeField(auto_now=True)
+    created = models.fields.DateTimeField(auto_now_add=True)
+    deleted = models.fields.BooleanField(default=False)
     
     def __str__(self) -> str:
-        return self.session_id
+        return f"{self.product} ({self.quantity})"
+    
+class Cart(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    order = models.ManyToManyField(Order, blank=True, null=True)
+    ordered = models.BooleanField(default=False)
+    
+    updated = models.fields.DateTimeField(auto_now=True)
+    created = models.fields.DateTimeField(auto_now_add=True)
+    deleted = models.fields.BooleanField(default=False)
+    
+    def __str__(self) -> str:
+        return self.user.username
 
 class ImageProduct(models.Model):
     image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")
