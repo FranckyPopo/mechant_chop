@@ -32,6 +32,7 @@ def add_to_cart_session(request, product_pk: int) -> None:
         request.session["cart"] = [
             {"pk": product_pk, "quantity": 1}
         ]
+        
 
 def get_cart_product(request) -> [dict]:
     """Cette fonction va retourner une liste qui contiendra des
@@ -46,3 +47,19 @@ def get_cart_product(request) -> [dict]:
         }
         cart.append(instance)        
     return cart
+    
+
+    
+def delete_to_cart(request, product_pk: int) -> None:
+    cart = request.session.get("cart", [])
+    
+    for order in cart:
+        if order["pk"] == product_pk:
+            print(order["pk"])
+            cart.remove(order)
+            request.session["cart"] = cart
+            break
+        
+        
+        
+        

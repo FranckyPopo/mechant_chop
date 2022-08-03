@@ -29,6 +29,5 @@ def total_price_cart(request):
 def cart(request):
     context = {"cart": utils.get_cart_product(request)}
     cart = render_to_string("shop/pages/cart-list.html", context=context)
-    print(cart)
     return {"cart": cart}
     
