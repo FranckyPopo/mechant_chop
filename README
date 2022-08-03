@@ -1,19 +1,16 @@
-- Crée un fichier base.html [x]
-- Ajouter les models dans l'administration [x]
-- dynamiser la page d'acceuil [x]
-- Ajouter les produits sélection dans le panier [x]
+Objecttif: Création d'un panier
 
-- Chercher comment faire une pagination
-- Modifier le champ description du model product en textField 
-- Modifier le champ color du model product en ManyToManyField
+MODELS  
+- Crée un model Cart [x]
+- Crée un model Order [x]
 
-- Voir jaheim pour le model global []
-- Demander a patrick si on dois crée une sous catégorie pour les celle qui existes déjà []
+NON CONNECTE
+- Ajouter un produit dans le pannier quaund l'utilisateur n'est pas connecté [x]
+- Afficher le nombre total de quantité de produit dans le panier [x]
+- Retirer un produit du pannier quaund l'utilisateur n'est pas connecté [x]
+- Crée une méthode qui va ajouter les produits de la session a la bd
 
-
-- Je veux créé un panier d'achat
-- J'ai les différents produits
-
-- ajouter le produits s'il n'existe pas déjà
-- incrémenter la valeur du produit sélection de plus 1 a chaque nouvelle ajout 
-- Afficher le panier de l'utilisateur 
+CONNECTE
+- Ajouter un produit dans le pannier quaund l'utilisateur est connecté
+- Modifier la quantite d'un produit quaund l'utilisateur est connecté
+- Retirer un produit du pannier quaund l'utilisateur est connecté

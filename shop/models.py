@@ -88,7 +88,7 @@ class Product(models.Model):
 # Cart
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered = models.BooleanField(default=False)
     
@@ -110,6 +110,32 @@ class Cart(models.Model):
     
     def __str__(self) -> str:
         return self.user.username
+
+    @classmethod
+    def add_cart_session_bd(cls, request) -> None:
+        """Cette méthode va permetre d'ajouter le pannier qui se
+        trouve dans la session de l'utilisateur dans le model Cart"""
+        
+        cart_session = request.session.get("cart", [])
+        user = request.user
+        cart, _ = cls.objects.get_or_create(user=user, ordered=False)
+        
+        for order in cart_session:
+            product = Products.objects.get(pk=order["pk"])
+            order, create = Order.objects.get_or_create(
+                user=user,
+                product=product,
+                ordered=False
+            )
+            
+            if create:
+                order.quantity = order["quantity"]
+                order.save()
+                cart.order.add(order)
+                cart.save()
+            else:
+                order.quantity += order["quantity"]
+                order.save()
 
 class ImageProduct(models.Model):
     image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")

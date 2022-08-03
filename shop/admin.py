@@ -34,6 +34,11 @@ class ImageProduct(admin.ModelAdmin):
 class NewsLater(admin.ModelAdmin):
     list_display = ["email", "date_create", "date_update"]
     
-@admin.register(models.OrderItem)
-class OrderItem(admin.ModelAdmin):
-    list_display = ["session_id", "date_create", "date_update"]
+@admin.register(models.Cart)
+class Cart(admin.ModelAdmin):
+    list_display = ["user", "ordered", "updated", "created"]
+
+@admin.register(models.Order)
+class Order(admin.ModelAdmin):
+    list_display = ["user", "product", "quantity", "ordered", "created", "updated"]
+
