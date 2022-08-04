@@ -3,17 +3,30 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.views import LoginView
 
 from shop import views
 from front.views import front_contact 
 
 urlpatterns = [
+    # Authentication
+    path(
+        "login/",
+        LoginView.as_view(
+            template_name="authentication/login.html",
+            redirect_authenticated_user=True
+        ),
+        name="authentication_login"
+    ),
+    
     path('admin/', admin.site.urls),
     path('', views.shop_index, name="shop_index"),
     path('detail-product/', views.shop_detail_product, name="shop_detail_product"),
     path('list-product/', views.shop_list_product, name="shop_list_product"),
     path('checkout/', views.shop_checkout, name="shop_checkout"),
     path('contact/', front_contact, name="shop_contact"),
+    
+    
     
     path('product-add-cart/<int:product_pk>/', views.ProductAddCart.as_view(), name="shop_add_product_cart"),
     path('product-delete-cart/<int:product_pk>/', csrf_exempt(views.ProductDeleteCart.as_view()), name="shop_delete_product_cart"),
