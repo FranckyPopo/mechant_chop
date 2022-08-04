@@ -38,7 +38,6 @@ class ProductAddCart(View):
         )
     
     def http_method_not_allowed(self, request):
-        
         return redirect("shop_index")
     
 class ProductDeleteCart(View):
@@ -46,10 +45,11 @@ class ProductDeleteCart(View):
     
     def post(self, request, product_pk=None):
         if request.user.is_authenticated:
-            pass
+            models.Cart.delete_to_cart(request, int(product_pk))
         else:
             utils.delete_to_cart(request, int(product_pk))
-            total_product_quantity = context_processors.get_total_product_quantity(request)
+        
+        total_product_quantity = context_processors.get_total_product_quantity(request)
             
         return HttpResponse(
             "",
@@ -62,6 +62,10 @@ class ProductDeleteCart(View):
                 })
             }
         )
+        
+    def http_method_not_allowed(self, request):
+        return redirect("shop_index")
+    
         
 
     def http_method_not_allowed(self, request):

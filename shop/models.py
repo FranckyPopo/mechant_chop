@@ -159,6 +159,14 @@ class Cart(models.Model):
             order.quantity += 1
             order.save()
 
+    @classmethod
+    def delete_to_cart(cls, request, product_pk: int) -> None:
+        """Cette méthode va permetre de supprimer un produit dans
+        le panier de l'utilisateur quand il est connecté"""
+        
+        user = request.user
+        product = cls.objects.get(user=user, ordered=False).order.get(product__pk=product_pk)
+        product.delete()
     
 class ImageProduct(models.Model):
     image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")
