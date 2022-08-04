@@ -12,8 +12,13 @@ def list_product(request):
 
 
 def get_total_product_quantity(request):
-    cart = request.session.get("cart", [])
-    total_product_quantity = sum([order["quantity"] for order in cart])
+    
+    if request.user.is_authenticated:
+        cart, _ = models.Cart.objects.get_or_create(user=request.user, ordered=False)
+        total_product_quantity = sum([order.quantity for order in cart.order.all()])
+    else:
+        cart = request.session.get("cart", [])
+        total_product_quantity = sum([order["quantity"] for order in cart])
     
     return {
         "total_product": total_product_quantity
@@ -27,7 +32,12 @@ def total_price_cart(request):
     
 
 def cart(request):
-    context = {"cart": utils.get_cart_product(request)}
+    if request.user.is_authenticated:
+        context = {"cart": models.Cart.objects.get(user=request.user, ordered=False)}
+    else:
+        context = {"cart_session": utils.get_cart_product(request)}
+    
     cart = render_to_string("shop/pages/cart-list.html", context=context)
+    
     return {"cart": cart}
     

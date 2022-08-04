@@ -14,15 +14,17 @@ class ProductAddCart(View):
     http_method_names = ["post"]
     template_name = "shop/pages/cart-list.html"
     
-    def post(self, request, product_pk):
+    def post(self, request, product_pk):        
         if request.user.is_authenticated:
-            pass
+            models.Cart.add_to_cart(request, int(product_pk))
+            context = {"cart": models.Cart.objects.get(user=request.user, ordered=False)}
         else:
             utils.add_to_cart_session(request, int(product_pk))
-            total_product_quantity = context_processors.get_total_product_quantity(request)
-            context = {"cart": utils.get_cart_product(request)}
-            response = render_to_string(self.template_name, context=context)
-            
+            context = {"cart_session": utils.get_cart_product(request)}
+        
+        response = render_to_string(self.template_name, context=context)
+        total_product_quantity = context_processors.get_total_product_quantity(request)
+        
         return HttpResponse(
             response,
             headers={

@@ -138,6 +138,28 @@ class Cart(models.Model):
                 order.quantity += order_session["quantity"]
                 order.save()
 
+    @classmethod
+    def add_to_cart(cls, request, product_pk: int) -> None:
+        """Cette méthode va permetre d'ajouter des produits dans
+        le panier de l'utilisateur quand il est connecté"""
+        
+        user = request.user
+        product = Product.objects.get(pk=product_pk)
+        cart = cls.objects.get(user=user, ordered=False)
+        order, create = Order.objects.get_or_create(
+            user=user,
+            product=product,
+            ordered=False
+        )
+        
+        if create:
+            cart.order.add(order)
+            cart.save()
+        else:
+            order.quantity += 1
+            order.save()
+
+    
 class ImageProduct(models.Model):
     image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")
 

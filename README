@@ -8,9 +8,8 @@ NON CONNECTE
 - Ajouter un produit dans le pannier quaund l'utilisateur n'est pas connecté [x]
 - Afficher le nombre total de quantité de produit dans le panier [x]
 - Retirer un produit du pannier quaund l'utilisateur n'est pas connecté [x]
-- Crée une méthode qui va ajouter les produits de la session a la bd
+- Crée une méthode qui va ajouter les produits de la session a la bd [x]
 
 CONNECTE
-- Ajouter un produit dans le pannier quaund l'utilisateur est connecté
-- Modifier la quantite d'un produit quaund l'utilisateur est connecté
+- Ajouter un produit dans le pannier quaund l'utilisateur est connecté [x]
 - Retirer un produit du pannier quaund l'utilisateur est connecté

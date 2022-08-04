@@ -1,6 +1,7 @@
 
-{% if user.is_authenticated %}
-    {% for order in cart %}
+
+{% if cart %}
+    {% for order in cart.order.all %}
         <!-- Single Cart Item -->
         <div class="single-cart-item" style="cursor: pointer;">
             <form method="post">
@@ -28,7 +29,7 @@
 
     {% endfor %}
 {% else %}
-    {% for order in cart %}
+    {% for order in cart_session %}
         <!-- Single Cart Item -->
         <div class="single-cart-item">
             <form method="post">
