@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import HttpResponse
 from django.template.loader import render_to_string
+from django.contrib.sessions.backends.db import SessionStore
+from django.contrib.sessions.models import Session
 
 import json
 
@@ -34,6 +36,7 @@ class ProductAddCart(View):
         )
     
     def http_method_not_allowed(self, request):
+        
         return redirect("shop_index")
     
 class ProductDeleteCart(View):
@@ -63,6 +66,8 @@ class ProductDeleteCart(View):
         return redirect("shop_index")
 
 def shop_index(request):
+    # session = Session.objects.get(session_key=request.session.session_key)
+    print(dir(SessionStore))
 
     context = {
         "cart": None,
