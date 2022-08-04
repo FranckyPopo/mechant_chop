@@ -1,15 +1,4 @@
-Objecttif: Création d'un panier
 
-MODELS  
-- Crée un model Cart [x]
-- Crée un model Order [x]
-
-NON CONNECTE
-- Ajouter un produit dans le pannier quaund l'utilisateur n'est pas connecté [x]
-- Afficher le nombre total de quantité de produit dans le panier [x]
-- Retirer un produit du pannier quaund l'utilisateur n'est pas connecté [x]
-- Crée une méthode qui va ajouter les produits de la session a la bd [x]
-
-CONNECTE
-- Ajouter un produit dans le pannier quaund l'utilisateur est connecté [x]
-- Retirer un produit du pannier quaund l'utilisateur est connecté
+- Dynamiser la page detaile
+- crée une page pour les produits aimés (L'utilisateur dois pouvoir ajouté ou voir c'est produits aimé seulement s'il est connecté)
+- afficher les réductions d'un produit s'il en a 
