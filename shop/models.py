@@ -62,6 +62,7 @@ class Color(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=150) 
     description = models.CharField(max_length=1000)
+    slug = models.SlugField(blank=True)
     first_photo = models.ImageField()
     second_photo = models.ImageField()
 
