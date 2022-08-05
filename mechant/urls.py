@@ -14,15 +14,15 @@ urlpatterns = [
      
     path('admin/', admin.site.urls),
     path('', views.shop_index, name="shop_index"),
-    path('detail-product/', views.shop_detail_product, name="shop_detail_product"),
     path('list-product/', views.shop_list_product, name="shop_list_product"),
     path('checkout/', views.shop_checkout, name="shop_checkout"),
     path('contact/', front_contact, name="shop_contact"),
     
     
+    path('products/<slug:slug>/', views.ShopDetailProduct.as_view(), name="shop_detail_product"),
     path("favourite-product/<int:product_pk>/", csrf_exempt(views.FavouriteProuct.as_view()), name="shop_favourite"),
     path('product-add-cart/<int:product_pk>/', views.ProductAddCart.as_view(), name="shop_add_product_cart"),
-    path('product-delete-cart/<int:product_pk>/', csrf_exempt(views.ProductDeleteCart.as_view()), name="shop_delete_product_cart"),
+    path('product-delete-cart/<int:product_pk><int:color_pk><int:size_pk>/', csrf_exempt(views.ProductDeleteCart.as_view()), name="shop_delete_product_cart"),
 ]
 
 if settings.DEBUG:

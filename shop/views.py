@@ -44,9 +44,14 @@ class ProductAddCart(View):
 class ProductDeleteCart(View):
     http_method_names = ["post"]
     
-    def post(self, request, product_pk=None):
+    def post(self, request, product_pk, color_pk, size_pk):
         if request.user.is_authenticated:
-            models.Cart.delete_to_cart(request, int(product_pk))
+            models.Cart.delete_to_cart(
+                request,
+                product_pk=int(product_pk),
+                color_pk=int(color_pk),
+                size_pk=int(size_pk),
+            )
         else:
             utils.delete_to_cart(request, int(product_pk))
         
@@ -104,15 +109,24 @@ class FavouriteProuct(LoginRequiredMixin, View):
     def http_method_not_allowed(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         return redirect("shop_index")
         
+class ShopDetailProduct(View):
+    template_name = "shop/pages/single-product-details.html"
+    
+    def get(self, request, slug):
+        product = get_object_or_404(models.Product, slug=slug)
+        context = {
+            "product": product,
+        }
+        
+        return render(request, self.template_name, context=context)
     
 def shop_index(request):
     return render(request, "shop/pages/index.html")
 
-def shop_detail_product(request):
-    return render(request, "shop/pages/single-product-details.html")
 
 def shop_list_product(request):
     return render(request, "shop/pages/shop.html")
+
 
 def shop_checkout(request):
     return render(request, "shop/pages/checkout.html")

@@ -103,7 +103,7 @@
                                 <!-- Product Description -->
                                 <div class="product-description">
                                     <span>{{ product.brand }}</span>
-                                    <a href="single-product-details.html">
+                                    <a href="{% url 'shop_detail_product' product.slug %}">
                                         <h6 id="ppp">{{ product.name }}</h6>
                                     </a>
                                      <!-- Price product -->

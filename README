@@ -1,4 +1,13 @@
 
 - Dynamiser la page detaile
-- crée une page pour les produits aimés (L'utilisateur dois pouvoir ajouté ou voir c'est produits aimé seulement s'il est connecté)
-- afficher les réductions d'un produit s'il en a 
+- crée une page pour les produits aimés (L'utilisateur dois pouvoir ajouté ou voir c'est produits aimé seulement s'il est connecté) [x]
+- afficher les réductions d'un produit s'il en a [x]
+
+
+
+Avant d'executer le projet lors de la présentation
+- Crée une objet Color qui aura le name qui sera égale a <White>, il sera choisi comme couleur pas défaul
+pour les produits ajouté dans le panier
+- Crée une objet Size qui aura le name qui sera égale a <M>, il sera choisi comme Taile pas défaul
+pour les produits ajouté dans le panier
+

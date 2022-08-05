@@ -1,6 +1,7 @@
 from django.db import models
 from colorfield.fields import ColorField
 from django.conf import settings
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 
 class Brand(models.Model):
@@ -120,7 +121,7 @@ class Order(models.Model):
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
-    
+
     updated = models.fields.DateTimeField(auto_now=True)
     created = models.fields.DateTimeField(auto_now_add=True)
     deleted = models.fields.BooleanField(default=False)
@@ -187,22 +188,16 @@ class Cart(models.Model):
                 color=color,
                 ordered=False
             )
-            
-            
-            # order.size.add(size)
-            # order.color.add(color)
-            # order.save()
         else:
-            defaul_size = Size.objects.get(name="M")
-            defaul_color = Color.objects.get(name="White")
+            defaul_size = product.size.first()
+            defaul_color = product.color.first()
             order, create = Order.objects.get_or_create(
                 user=user,
                 product=product,
+                size=defaul_size,
+                color=defaul_color,
                 ordered=False
             )
-            order.size.add(defaul_size)
-            order.color.add(defaul_color)
-            order.save()
             
         if create:
             cart.order.add(order)
@@ -212,13 +207,18 @@ class Cart(models.Model):
             order.save()
 
     @classmethod
-    def delete_to_cart(cls, request, product_pk: int) -> None:
+    def delete_to_cart(cls, request: HttpRequest, product_pk: int, color_pk: int, size_pk: int) -> None:
         """Cette méthode va permetre de supprimer un produit dans
         le panier de l'utilisateur quand il est connecté"""
         
         user = request.user
-        product = cls.objects.get(user=user, ordered=False).order.get(product__pk=product_pk)
-        product.delete()
+        cart = cls.objects.get(user=user, ordered=False)
+        orders = cart.order.get(
+            product__pk=product_pk,
+            color__pk=color_pk,
+            size__pk=size_pk
+        )
+        orders.delete()
     
 class ImageProduct(models.Model):
     image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")

@@ -36,12 +36,12 @@
             <form class="cart-form clearfix" method="post">
                 <!-- Select Box -->
                 <div class="select-box d-flex mt-50 mb-30">
-                    <select name="select" id="productSize" class="mr-5">
+                    <select name="size" id="productSize" class="mr-5">
                         {% for size in product.size.all %}
                             <option value="{{ size.pk }}">Size: {{ size.name }}</option>
                         {% endfor %}
                     </select>
-                    <select name="select" id="productColor">
+                    <select name="color" id="productColor">
                         {% for color in product.color.all %}
                             <option value="{{ color.pk }}">Color: {{ color.name }}</option>
                         {% endfor %}
@@ -50,7 +50,18 @@
                 <!-- Cart & Favourite Box -->
                 <div class="cart-fav-box d-flex align-items-center">
                     <!-- Cart -->
-                    <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
+                    {% csrf_token %}
+                    <button 
+                        type="Submit" 
+                        name="addtocart" 
+                        value="5" 
+                        class="btn essence-btn"
+                        hx-post="{% url 'shop_add_product_cart' product.pk %}"
+                        hx-target=".cart-list"
+                        hx-swap="innerHTML"
+                        hx-trigger="click">
+                        Add to cart
+                    </button>
                     <!-- Favourite -->
                     <div 
                         class="product-favourite ml-4"
