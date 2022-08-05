@@ -117,8 +117,8 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    size = models.ManyToManyField(Size)
-    color = models.ManyToManyField(Color)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     
     updated = models.fields.DateTimeField(auto_now=True)
@@ -146,7 +146,6 @@ class Cart(models.Model):
         trouve dans la session de l'utilisateur dans le model Cart"""
         
         cart_session = request.session.get("cart", [])
-        print(cart_session)
         user = request.user
         cart, _ = cls.objects.get_or_create(user=user, ordered=False)
         
@@ -179,21 +178,32 @@ class Cart(models.Model):
         cart = cls.objects.get(user=user, ordered=False)
         
         if size_pk and color_pk:
-            size = get_object_or_404(Size, pk=size_pk)
-            color = get_object_or_404(Color, pk=color_pk)
+            size = get_object_or_404(Size, pk=int(size_pk))
+            color = get_object_or_404(Color, pk=int(color_pk))
+            order, create = Order.objects.get_or_create(
+                user=user,
+                product=product,
+                size=size,
+                color=color,
+                ordered=False
+            )
             
-            product.size.add(size)
-            product.color.add(color)
-            product.save()
-        
-        order, create = Order.objects.get_or_create(
-            user=user,
-            product=product,
-            ordered=False
-        )
-        
-        
-        
+            
+            # order.size.add(size)
+            # order.color.add(color)
+            # order.save()
+        else:
+            defaul_size = Size.objects.get(name="M")
+            defaul_color = Color.objects.get(name="White")
+            order, create = Order.objects.get_or_create(
+                user=user,
+                product=product,
+                ordered=False
+            )
+            order.size.add(defaul_size)
+            order.color.add(defaul_color)
+            order.save()
+            
         if create:
             cart.order.add(order)
             cart.save()
