@@ -17,28 +17,34 @@
 
         <!-- Single Product Description -->
         <div class="single_product_desc clearfix">
-            <span>mango</span>
-            <a href="cart.html">
-                <h2>One Shoulder Glitter Midi Dress</h2>
+            <span>{{ product.brand }}</span>
+            <a href="{% url 'shop_index' %}">
+                <h2>{{ product.name }}</h2>
             </a>
-            <p class="product-price"><span class="old-price">$65.00</span> $49.00</p>
-            <p class="product-desc">Mauris viverra cursus ante laoreet eleifend. Donec vel fringilla ante. Aenean finibus velit id urna vehicula, nec maximus est sollicitudin.</p>
+            <!-- Price -->
+            <p class="product-price">
+                {% if product.is_promotion %}
+                    <span class="old-price">{{ product.price }} XOF</span>
+                    {{ product.get_price_promotion.price_promotion }} XOF
+                {% else %}
+                    {{ product.price }} XOF
+                {% endif %}      
+            </p>
+            <p class="product-desc">{{ product.description }}</p>
 
             <!-- Form -->
             <form class="cart-form clearfix" method="post">
                 <!-- Select Box -->
                 <div class="select-box d-flex mt-50 mb-30">
                     <select name="select" id="productSize" class="mr-5">
-                        <option value="value">Size: XL</option>
-                        <option value="value">Size: X</option>
-                        <option value="value">Size: M</option>
-                        <option value="value">Size: S</option>
+                        {% for size in product.size.all %}
+                            <option value="{{ size.pk }}">Size: {{ size.name }}</option>
+                        {% endfor %}
                     </select>
                     <select name="select" id="productColor">
-                        <option value="value">Color: Black</option>
-                        <option value="value">Color: White</option>
-                        <option value="value">Color: Red</option>
-                        <option value="value">Color: Purple</option>
+                        {% for color in product.color.all %}
+                            <option value="{{ color.pk }}">Color: {{ color.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <!-- Cart & Favourite Box -->
@@ -46,8 +52,16 @@
                     <!-- Cart -->
                     <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
                     <!-- Favourite -->
-                    <div class="product-favourite ml-4">
-                        <a href="#" class="favme fa fa-heart"></a>
+                    <div 
+                        class="product-favourite ml-4"
+                        hx-trigger="click"
+                        hx-post="{% url 'shop_favourite' product.pk %}"
+                        hx-swap="none">
+                        {% if product in user.likes.all %}
+                            <a href="#" class="favme fa fa-heart active"></a>
+                        {% else %}
+                            <a href="#" class="favme fa fa-heart"></a>
+                        {% endif %}
                     </div>
                 </div>
             </form>
