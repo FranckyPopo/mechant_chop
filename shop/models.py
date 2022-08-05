@@ -67,7 +67,7 @@ class Product(models.Model):
     second_photo = models.ImageField()
 
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="product_brand")
-    size = models.ForeignKey(Size, on_delete=models.CASCADE, related_name="product_size")
+    size = models.ManyToManyField(Size)
     color = models.ForeignKey(Color, on_delete=models.CASCADE, related_name="product_color")
 
     price = models.PositiveIntegerField(default=0)
