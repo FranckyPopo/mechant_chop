@@ -1,14 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import View
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.template.loader import render_to_string
-from django.contrib.sessions.backends.db import SessionStore
-from django.contrib.sessions.models import Session
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+from typing import Any
 import json
 
 from shop import models, utils
 from mechant import context_processors
+
 
 class ProductAddCart(View):
     http_method_names = ["post"]
@@ -71,14 +72,40 @@ class ProductDeleteCart(View):
     def http_method_not_allowed(self, request):
         return redirect("shop_index")
 
-def shop_index(request):
-    # session = Session.objects.get(session_key=request.session.session_key)
-    print(dir(SessionStore))
-
-    context = {
-        "cart": None,
-    }
+class FavouriteProuct(LoginRequiredMixin, View):
     
+    def post(self, request: HttpRequest, product_pk: int) -> HttpResponse:
+        """Cette méthode va permetre d'ajouter ou de retirer
+        un produit des favoris
+
+        Args:
+            request (HttpRequest): Objet HttpRequest
+            product_pk (int): pk du produit
+
+        Returns:
+            HttpResponse: réponse
+        """
+        
+        product = get_object_or_404(models.Product, pk=product_pk)
+        user = request.user
+        likes = user.like.all()
+                
+        for product_like in likes:
+            if product_like == product:
+                user.like.remove(product_like)
+                user.save()
+                break
+        else:
+            user.like.add(product)
+            user.save()
+        
+        return HttpResponse("")
+    
+    def http_method_not_allowed(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        return redirect("shop_index")
+        
+    
+def shop_index(request):
     return render(request, "shop/pages/index.html")
 
 def shop_detail_product(request):

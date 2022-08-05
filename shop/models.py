@@ -142,7 +142,6 @@ class Cart(models.Model):
         trouve dans la session de l'utilisateur dans le model Cart"""
         
         cart_session = request.session.get("cart", [])
-        print(cart_session)
         user = request.user
         cart, _ = cls.objects.get_or_create(user=user, ordered=False)
         

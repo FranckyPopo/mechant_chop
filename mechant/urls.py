@@ -21,6 +21,7 @@ urlpatterns = [
     
     
     
+    path("favourite-product/<int:product_pk>/", csrf_exempt(views.FavouriteProuct.as_view()), name="shop_favourite"),
     path('product-add-cart/<int:product_pk>/', views.ProductAddCart.as_view(), name="shop_add_product_cart"),
     path('product-delete-cart/<int:product_pk>/', csrf_exempt(views.ProductDeleteCart.as_view()), name="shop_delete_product_cart"),
 ]
