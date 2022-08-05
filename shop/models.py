@@ -1,6 +1,7 @@
 from django.db import models
 from colorfield.fields import ColorField
 from django.conf import settings
+from django.shortcuts import get_object_or_404
 
 class Brand(models.Model):
     name = models.CharField(max_length=150)
@@ -116,6 +117,8 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    size = models.ManyToManyField(Size)
+    color = models.ManyToManyField(Color)
     ordered = models.BooleanField(default=False)
     
     updated = models.fields.DateTimeField(auto_now=True)
@@ -168,15 +171,28 @@ class Cart(models.Model):
     def add_to_cart(cls, request, product_pk: int) -> None:
         """Cette méthode va permetre d'ajouter des produits dans
         le panier de l'utilisateur quand il est connecté"""
-        
+
         user = request.user
-        product = Product.objects.get(pk=product_pk)
+        size_pk = request.POST.get("size", False)
+        color_pk = request.POST.get("color", False)
+        product = get_object_or_404(Product, pk=product_pk)
         cart = cls.objects.get(user=user, ordered=False)
+        
+        if size_pk and color_pk:
+            size = get_object_or_404(Size, pk=size_pk)
+            color = get_object_or_404(Color, pk=color_pk)
+            
+            product.size.add(size)
+            product.color.add(color)
+            product.save()
+        
         order, create = Order.objects.get_or_create(
             user=user,
             product=product,
             ordered=False
         )
+        
+        
         
         if create:
             cart.order.add(order)
