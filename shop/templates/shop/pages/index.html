@@ -93,7 +93,11 @@
                                         hx-post="{% url 'shop_favourite' product.pk %}"
                                         hx-swap="none"
                                         class="product-favourite">
-                                        <a href="#" class="favme fa fa-heart"></a>
+                                        {% if product in user.likes.all %}
+                                            <a href="#" class="favme fa fa-heart active"></a>
+                                        {% else %}
+                                            <a href="#" class="favme fa fa-heart"></a>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <!-- Product Description -->
