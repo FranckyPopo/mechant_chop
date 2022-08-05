@@ -81,6 +81,12 @@
                                     <img src="{{ product.first_photo.url }}" alt="">
                                     <!-- Hover Thumb -->
                                     <img class="hover-img" src="{{ product.second_photo.url }}" alt="">
+                                    <!-- Product Badge -->
+                                    {% if product.is_promotion %}
+                                        <div class="product-badge offer-badge">
+                                            <span>-{{ product.get_price_promotion.reduction }}{{ product.get_price_promotion.symbole }}</span>
+                                        </div>
+                                    {% endif %}
                                     <!-- Favourite -->
                                     <div class="product-favourite">
                                         <a href="#" class="favme fa fa-heart"></a>
@@ -88,11 +94,19 @@
                                 </div>
                                 <!-- Product Description -->
                                 <div class="product-description">
-                                    <span>{{ product.band }}</span>
+                                    <span>{{ product.brand }}</span>
                                     <a href="single-product-details.html">
                                         <h6 id="ppp">{{ product.name }}</h6>
                                     </a>
-                                    <p class="product-price">{{ product.price }} XOF</p>
+                                     <!-- Price product -->
+                                    <p class="product-price">
+                                        {% if product.is_promotion %}
+                                            <span class="old-price">{{ product.price }} XOF</span>
+                                            {{ product.get_price_promotion.price_promotion }} XOF
+                                        {% else %}
+                                            {{ product.price }} XOF
+                                        {% endif %}      
+                                    </p>
                                     <!-- Hover Content -->
                                     <div class="hover-content">
                                         <!-- Add to Cart -->

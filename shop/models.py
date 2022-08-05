@@ -2,8 +2,6 @@ from django.db import models
 from colorfield.fields import ColorField
 from django.conf import settings
 
-from pprint import pprint
-
 class Brand(models.Model):
     name = models.CharField(max_length=150)
     image = models.ImageField()
@@ -72,6 +70,7 @@ class Product(models.Model):
     color = models.ForeignKey(Color, on_delete=models.CASCADE, related_name="product_color")
 
     price = models.PositiveIntegerField(default=0)
+    is_promotion = models.BooleanField(default=False)
     promotion_percentage = models.PositiveIntegerField(blank=True, null=True)
     promotion_price = models.PositiveIntegerField(blank=True, null=True)
 
@@ -84,6 +83,32 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_price_promotion(self) -> int:
+        """Cette méthode retourne le prix d'un article aprés
+        déduction de la promotion s'il en a, dans le cas contraire
+        retourne le prix original de l'article
+
+        Returns:
+            int : le prix finale de l'article
+        """
+        if self.is_promotion:
+            if self.promotion_percentage:
+                return {
+                    "price_promotion": self.price * self.promotion_percentage // 100,
+                    "reduction": self.promotion_percentage,
+                    "symbole": "%"
+                } 
+            else:
+                return {
+                    "price_promotion": self.price - self.promotion_price,
+                    "reduction": self.promotion_price,
+                    "symbole": "XOF"
+                } 
+        return self.price
+    
+    def is_new(self) -> bool:
+        pass
 
 # Cart
 class Order(models.Model):
