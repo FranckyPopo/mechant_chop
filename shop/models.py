@@ -68,7 +68,7 @@ class Product(models.Model):
 
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="product_brand")
     size = models.ManyToManyField(Size)
-    color = models.ForeignKey(Color, on_delete=models.CASCADE, related_name="product_color")
+    color = models.ManyToManyField(Color)
 
     price = models.PositiveIntegerField(default=0)
     is_promotion = models.BooleanField(default=False)
