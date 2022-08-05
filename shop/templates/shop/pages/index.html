@@ -87,19 +87,11 @@
                                             <span>-{{ product.get_price_promotion.reduction }}{{ product.get_price_promotion.symbole }}</span>
                                         </div>
                                     {% endif %}
-                                </div>
-                                <!-- Favourite -->
-                                    <div 
-                                        hx-trigger="click"
-                                        hx-post="{% url 'shop_favourite' product.pk %}"
-                                        hx-swap="none"
-                                        class="product-favourite">
-                                        {% if product in user.like.all %}
-                                            <a href="#" class="favme fa fa-heart active"></a>
-                                        {% else %}
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        {% endif %}
+                                    <!-- Favourite -->
+                                    <div class="product-favourite">
+                                        <a href="#" class="favme fa fa-heart"></a>
                                     </div>
+                                </div>
                                 <!-- Product Description -->
                                 <div class="product-description">
                                     <span>{{ product.brand }}</span>
