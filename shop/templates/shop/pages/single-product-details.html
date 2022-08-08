@@ -9,9 +9,12 @@
         <!-- Single Product Thumb -->
         <div class="single_product_thumb clearfix">
             <div class="product_thumbnail_slides owl-carousel">
-                <img src=" {% static 'shop/img/product-img/product-big-1.jpg' %}" alt="">
-                <img src=" {% static 'shop/img/product-img/product-big-2.jpg' %}" alt="">
-                <img src=" {% static 'shop/img/product-img/product-big-3.jpg' %}" alt="">
+                <img src="{{ product.first_photo.url }}" alt="">
+                <img src="{{ product.second_photo.url }}" alt="">
+                
+                {% for photo in photos %}
+                    <img src="{{ photo.image.url }}" alt="">
+                {% endfor %}
             </div>
         </div>
 

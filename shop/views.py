@@ -113,9 +113,9 @@ class ShopDetailProduct(View):
     template_name = "shop/pages/single-product-details.html"
     
     def get(self, request, slug):
-        product = get_object_or_404(models.Product, slug=slug)
         context = {
-            "product": product,
+            "product": get_object_or_404(models.Product, slug=slug),
+            "photos": models.ImageProduct.objects.filter(product__slug=slug)
         }
         
         return render(request, self.template_name, context=context)
