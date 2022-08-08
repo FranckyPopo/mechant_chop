@@ -3,6 +3,7 @@ from django.views.generic import View
 from django.http import HttpRequest, HttpResponse
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 from typing import Any
 import json
@@ -131,8 +132,28 @@ def shop_index(request):
     return render(request, "shop/pages/index.html")
 
 
-def shop_list_product(request):
-    return render(request, "shop/pages/shop.html")
+class ShopListProduct(View):
+    template_name = "shop/pages/shop.html"
+    
+    def get(self, request):
+        products = models.Product.objects.all()
+        
+        # Paginator
+        paginator = Paginator(products, 3)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        
+        context = {
+            "page_obj": page_obj,
+        }
+        
+        return render(request, self.template_name, context=context)
+    
+    def post(self, request):
+        pass
+    
+    def http_method_not_allowed(self, request):
+        return redirect("shop_index")
 
 
 def shop_checkout(request):

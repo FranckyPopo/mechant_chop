@@ -150,7 +150,7 @@
                                 <div class="product-topbar d-flex align-items-center justify-content-between">
                                     <!-- Total Products -->
                                     <div class="total-products">
-                                        <p><span>186</span> products found</p>
+                                        <p><span>{{ page_obj.object_list|length }}</span> products found</p>
                                     </div>
                                     <!-- Sorting -->
                                     <div class="product-sorting d-flex">
@@ -170,89 +170,117 @@
                         </div>
 
                         <div class="row">
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="{% static 'shop/img/product-img/product-1.jpg' %}" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="{% static 'shop/img/product-img/product-1.jpg' %}" alt="">
 
-                                        <!-- Product Badge -->
-                                        <div class="product-badge offer-badge">
-                                            <span>-30%</span>
+                            {% for instance in page_obj %}
+                                <!-- Single Product -->
+                                <div class="col-12 col-sm-6 col-lg-4">
+                                    <div class="single-product-wrapper">
+                                        <!-- Product Image -->
+                                        <div class="product-img">
+                                            <img src="{{ instance.first_photo.url }}" alt="">
+                                            <!-- Hover Thumb -->
+                                            <img class="hover-img" src="{{ instance.second_photo.url }}" alt="">
+                                            <!-- Product Badge -->
+                                            {% if instance.is_promotion %}
+                                                <div class="product-badge offer-badge">
+                                                    <span>-{{ instance.get_price_promotion.reduction }}{{ instance.get_price_promotion.symbole }}</span>
+                                                </div>
+                                            {% endif %}
+                                            <!-- Favourite -->
+                                            {% if user.is_authenticated %}
+                                                <div 
+                                                    hx-trigger="click"
+                                                    hx-post="{% url 'shop_favourite' instance.pk %}"
+                                                    hx-swap="none"
+                                                    class="product-favourite">
+                                                    {% if instance in user.likes.all %}
+                                                        <a href="#" class="favme fa fa-heart active"></a>
+                                                    {% else %}
+                                                        <a href="#" class="favme fa fa-heart"></a>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
                                         </div>
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Knot Front Mini Dress</h6>
-                                        </a>
-                                        <p class="product-price"><span class="old-price">$75.00</span> $55.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">Add to Cart</a>
+                                        <!-- Product Description -->
+                                        <div class="product-description">
+                                            <span>{{ instance.brand }}</span>
+                                            <a href="{% url 'shop_detail_product' instance.slug %}">
+                                                <h6 id="ppp">{{ instance.name }}</h6>
+                                            </a>
+                                             <!-- Price product -->
+                                            <p class="product-price">
+                                                {% if instance.is_promotion %}
+                                                    <span class="old-price">{{ instance.price }} XOF</span>
+                                                    {{ instance.get_price_promotion.price_promotion }} XOF
+                                                {% else %}
+                                                    {{ instance.price }} XOF
+                                                {% endif %}      
+                                            </p>
+                                            <!-- Hover Content -->
+                                            <div class="hover-content">
+                                                <!-- Add to Cart -->
+                                                <form method="post" class="btn essence-btn">
+                                                    {% csrf_token %}
+                                                    <div class="add-to-cart-btn"
+                                                        hx-post="{% url 'shop_add_product_cart' instance.pk %}"
+                                                        hx-target=".cart-list"
+                                                        hx-swap="innerHTML"
+                                                        hx-trigger="click">
+                                                        <a href="#" >
+                                                            Ajouter au parnier
+                                                        </a> 
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <!-- Single Product -->
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="single-product-wrapper">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="{% static 'shop/img/product-img/product-1.jpg' %}" alt="">
-                                        <!-- Hover Thumb -->
-                                        <img class="hover-img" src="{% static 'shop/img/product-img/product-1.jpg' %}" alt="">
-
-                                        <!-- Favourite -->
-                                        <div class="product-favourite">
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <span>topshop</span>
-                                        <a href="single-product-details.html">
-                                            <h6>Knot Front Mini Dress</h6>
-                                        </a>
-                                        <p class="product-price">$80.00</p>
-
-                                        <!-- Hover Content -->
-                                        <div class="hover-content">
-                                            <!-- Add to Cart -->
-                                            <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
+                            {% endfor %}
                         </div>
                     </div>
                     <!-- Pagination -->
                     <nav aria-label="navigation">
+                        
                         <ul class="pagination mt-50 mb-70">
-                            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left"></i></a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#">21</a></li>
-                            <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right"></i></a></li>
+
+                            
+                            {% if page_obj.has_previous %}
+                                <!-- Page précedentes -->
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1">
+                                        <i class="fa fa-angle-left"></i>
+                                    </a>
+                                </li>
+                            
+                                <!-- Première page  -->
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                        {{ page_obj.previous_page_number }}
+                                    </a>
+                                </li>
+                            
+                            {% endif %}
+                            
+                            
+                            {% if page_obj.has_next %}
+                                <!-- Page suivantes -->
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                                        {{ page_obj.next_page_number }}
+                                    </a>
+                                </li>
+
+                                <!-- Derniere pages -->
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            
+                            
                         </ul>
                     </nav>
                 </div>
