@@ -88,17 +88,19 @@
                                         </div>
                                     {% endif %}
                                     <!-- Favourite -->
-                                    <div 
-                                        hx-trigger="click"
-                                        hx-post="{% url 'shop_favourite' product.pk %}"
-                                        hx-swap="none"
-                                        class="product-favourite">
-                                        {% if product in user.likes.all %}
-                                            <a href="#" class="favme fa fa-heart active"></a>
-                                        {% else %}
-                                            <a href="#" class="favme fa fa-heart"></a>
-                                        {% endif %}
-                                    </div>
+                                    {% if user.is_authenticated %}
+                                        <div 
+                                            hx-trigger="click"
+                                            hx-post="{% url 'shop_favourite' product.pk %}"
+                                            hx-swap="none"
+                                            class="product-favourite">
+                                            {% if product in user.likes.all %}
+                                                <a href="#" class="favme fa fa-heart active"></a>
+                                            {% else %}
+                                                <a href="#" class="favme fa fa-heart"></a>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
                                 </div>
                                 <!-- Product Description -->
                                 <div class="product-description">

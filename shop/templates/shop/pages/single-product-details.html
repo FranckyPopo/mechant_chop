@@ -65,18 +65,21 @@
                         hx-trigger="click">
                         Add to cart
                     </button>
+
                     <!-- Favourite -->
-                    <div 
-                        class="product-favourite ml-4"
-                        hx-trigger="click"
-                        hx-post="{% url 'shop_favourite' product.pk %}"
-                        hx-swap="none">
-                        {% if product in user.likes.all %}
-                            <a href="#" class="favme fa fa-heart active"></a>
-                        {% else %}
-                            <a href="#" class="favme fa fa-heart"></a>
-                        {% endif %}
-                    </div>
+                    {% if user.is_authenticated %}
+                        <div 
+                            class="product-favourite ml-4"
+                            hx-trigger="click"
+                            hx-post="{% url 'shop_favourite' product.pk %}"
+                            hx-swap="none">
+                            {% if product in user.likes.all %}
+                                <a href="#" class="favme fa fa-heart active"></a>
+                            {% else %}
+                                <a href="#" class="favme fa fa-heart"></a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
             </form>
         </div>
