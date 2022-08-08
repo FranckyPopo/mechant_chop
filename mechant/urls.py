@@ -6,15 +6,16 @@ from django.views.decorators.csrf import csrf_exempt
 
 from shop import views
 from front.views import front_contact 
-from authentication.views import LoginView
+from authentication.views import LoginView, SignUpView
 
 urlpatterns = [
     # Authentication
     path("login/", LoginView.as_view(), name="authentication_login"),
+    path("sing-up/", SignUpView.as_view(), name="authentication_sing_up"),
      
     path('admin/', admin.site.urls),
     path('', views.shop_index, name="shop_index"),
-    path('list-product/', views.shop_list_product, name="shop_list_product"),
+    path('list-product/', views.ShopListProduct.as_view(), name="shop_list_product"),
     path('checkout/', views.shop_checkout, name="shop_checkout"),
     path('contact/', front_contact, name="shop_contact"),
     

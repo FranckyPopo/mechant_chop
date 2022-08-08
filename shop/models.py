@@ -69,8 +69,8 @@ class Product(models.Model):
     second_photo = models.ImageField()
 
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="product_brand")
-    size = models.ManyToManyField(Size)
-    color = models.ManyToManyField(Color)
+    size = models.ManyToManyField(Size, blank=True, null=True)
+    color = models.ManyToManyField(Color, blank=True, null=True)
 
     price = models.PositiveIntegerField(default=0)
     is_promotion = models.BooleanField(default=False)
@@ -152,9 +152,13 @@ class Cart(models.Model):
         
         for order_session in cart_session:
             product = Product.objects.get(pk=order_session["pk"])
+            color = Color.objects.get(name=order_session["color"])
+            size = Size.objects.get(name=order_session["size"])
             order, create = Order.objects.get_or_create(
                 user=user,
                 product=product,
+                color=color,
+                size=size,
                 ordered=False
             )
             

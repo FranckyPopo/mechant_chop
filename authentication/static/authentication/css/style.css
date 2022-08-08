@@ -4,7 +4,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -8190,15 +8190,17 @@ h1, h2, h3, h4, h5,
   .login-wrap h3 {
     font-weight: 700;
     font-size: 20px;
-    color: #8d448b; }
+    color: #212529;
+    }
   .login-wrap .icon {
     width: 80px;
     height: 80px;
-    background: #8d448b;
+    background: #212529;
     border-radius: 50%;
     font-size: 30px;
     margin: 0 auto;
-    margin-bottom: 10px; }
+    margin-bottom: 10px;
+    }
     .login-wrap .icon span {
       color: #fff; }
 
@@ -8305,9 +8307,10 @@ h1, h2, h3, h4, h5,
   .btn:hover, .btn:active, .btn:focus {
     outline: none; }
   .btn.btn-primary {
-    background: #8d448b !important;
-    border: 1px solid #8d448b !important;
-    color: #fff !important; }
+    background: #212529 !important;
+    border: 1px solid #212529 !important;
+    color: #fff !important;
+    }
     .btn.btn-primary:hover {
       border: 1px solid #8d448b;
       background: transparent;

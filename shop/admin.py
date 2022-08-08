@@ -40,5 +40,14 @@ class Cart(admin.ModelAdmin):
 
 @admin.register(models.Order)
 class Order(admin.ModelAdmin):
-    list_display = ["user", "product", "quantity", "ordered", "created", "updated"]
+    list_display = [
+        "user",
+        "product",
+        "color",
+        "size",
+        "quantity",
+        "ordered",
+        "created",
+        "updated"
+    ]
 

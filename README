@@ -1,7 +1,10 @@
 
-- Dynamiser la page detaile
-- crée une page pour les produits aimés (L'utilisateur dois pouvoir ajouté ou voir c'est produits aimé seulement s'il est connecté) [x]
-- afficher les réductions d'un produit s'il en a [x]
+- Crée une page d'inscription [x]
+- Ajout l'utilisateur dans la newslater
+- Modifier l'affichage des toasts [x]
+- Afficher une allet quand on supprimer un produit du panier
+- Dynamiser La page shop
+
 
 
 

@@ -1,0 +1,42 @@
+{% extends 'shop/base/base.html' %}
+{% load widget_tweaks %}
+{% block "main" %}
+
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+				<div class="icon d-flex align-items-center justify-content-center">
+					<span class="fa fa-user-o"></span>
+				</div>
+				<h3 class="text-center mb-4">Vous n'avez pas de compte ?</h3>
+
+				<form method="post" action="{% url 'authentication_sing_up' %}" class="sing-up-form">
+					{% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group d-flex">
+                            {% render_field field placeholder=field.label  class="form-control rounded-left"  %}
+                        </div>
+                        {% if field.errors %}
+                            <div class="alert alert-danger">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="form-group">
+						<button type="submit" class="btn btn-primary rounded submit p-3 px-5">Get Started</button>
+					</div>
+				</form>
+			</div>
+				</div>
+			</div>
+		</div>
+
+		
+	</section>
+{% endblock "main" %}
+
+
+
