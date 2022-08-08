@@ -24,15 +24,16 @@ class ProductAddCart(View):
             context = {"cart_session": utils.get_cart_product(request)}
         
         response = render_to_string(self.template_name, context=context)
-        
+        total_product_price = context_processors.total_price_cart(request)
         total_product_quantity = context_processors.get_total_product_quantity(request)
+        
         return HttpResponse(
             response,
             headers={
                 "HX-Trigger": json.dumps({
                     "product_add": {
                         "total_product": total_product_quantity["total_product"],
-                        "tota_price_cart": None,
+                        "tota_price_cart": total_product_price,
                     }
                 })
             }
@@ -61,6 +62,7 @@ class ProductDeleteCart(View):
             )
         
         total_product_quantity = context_processors.get_total_product_quantity(request)
+        total_product_price = context_processors.total_price_cart(request)
             
         return HttpResponse(
             "",
@@ -68,7 +70,7 @@ class ProductDeleteCart(View):
                 "HX-Trigger": json.dumps({
                     "product_delete": {
                         "total_product": total_product_quantity["total_product"],
-                        "tota_price_cart": None,
+                        "tota_price_cart": total_product_price,
                     }
                 })
             }

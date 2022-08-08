@@ -1,6 +1,5 @@
 span_total_product = document.querySelectorAll("#total_product");
 span_tota_price_cart = document.querySelector("#tota_price_cart");
-console.log("POuihouho")
 
 htmx.on("product_add", function (e){
     Swal.fire({
@@ -13,7 +12,7 @@ htmx.on("product_add", function (e){
         item.innerHTML = e.detail.total_product;
     };
 
-    span_tota_price_cart.innerHTML = e.detail.tota_price_cart  + " XOF"
+    span_tota_price_cart.innerHTML = e.detail.tota_price_cart.total_price_cart  + " XOF"
 });
 
 htmx.on("product_delete", function (e){
@@ -21,5 +20,6 @@ htmx.on("product_delete", function (e){
         item.innerHTML = e.detail.total_product;
     };
 
-    span_tota_price_cart.innerHTML = e.detail.tota_price_cart  + " XOF"
+    span_tota_price_cart.innerHTML = e.detail.tota_price_cart.total_price_cart  + " XOF"
 });
+

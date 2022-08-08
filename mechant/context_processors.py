@@ -26,8 +26,16 @@ def get_total_product_quantity(request):
 
     
 def total_price_cart(request):
+    
+    if request.user.is_authenticated:
+        cart = models.Cart.objects.get(user=request.user, ordered=False)
+        total_price_cart = sum([order.product.get_price_promotion() * order.quantity for order in cart.order.all()])
+    else:
+        cart = utils.get_cart_product(request)
+        total_price_cart = sum([order["product"].get_price_promotion() * order["quantity"] for order in cart])
+    
     return {
-        "total_price_cart": None
+        "total_price_cart": total_price_cart or 0
     }
     
 
