@@ -24,8 +24,8 @@ class ProductAddCart(View):
             context = {"cart_session": utils.get_cart_product(request)}
         
         response = render_to_string(self.template_name, context=context)
-        total_product_quantity = context_processors.get_total_product_quantity(request)
         
+        total_product_quantity = context_processors.get_total_product_quantity(request)
         return HttpResponse(
             response,
             headers={
@@ -53,7 +53,12 @@ class ProductDeleteCart(View):
                 size_pk=int(size_pk),
             )
         else:
-            utils.delete_to_cart(request, int(product_pk))
+            utils.delete_to_cart(
+                request, 
+                product_pk=int(product_pk),
+                color_pk=str(color_pk),
+                size_pk=str(size_pk),
+            )
         
         total_product_quantity = context_processors.get_total_product_quantity(request)
             

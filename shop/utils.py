@@ -1,7 +1,9 @@
+from django.http import HttpRequest
+
 from shop import models
 
 
-def add_to_cart_session(request, product_pk: int) -> None:
+def add_to_cart_session(request: HttpRequest, product_pk: int) -> None:
     """Cette fonction va permtre d'ajouter des produits
     dans un panier via la session de l'utilisateur"""
     
@@ -83,7 +85,7 @@ def add_to_cart_session(request, product_pk: int) -> None:
         ]
         
 
-def get_cart_product(request) -> [dict]:
+def get_cart_product(request: HttpRequest) -> [dict]:
     """Cette fonction va retourner une liste qui contiendra des
     disctionnaires qui aurons les clés suivante: product et quantity."""
     
@@ -99,18 +101,22 @@ def get_cart_product(request) -> [dict]:
         cart.append(instance)        
     return cart
     
-
     
-def delete_to_cart(request, product_pk: int) -> None:
+def delete_to_cart(request: HttpRequest, product_pk: int, color_pk: str, size_pk: str) -> None:
     cart = request.session.get("cart", [])
+    color = models.Color.objects.get(pk=color_pk)
+    size = models.Size.objects.get(pk=size_pk)
     
     for order in cart:
-        if order["pk"] == product_pk:
-            print(order["pk"])
+        
+        if (
+            order["pk"] == product_pk 
+            and order["size"] == size.name 
+            and order["color"] == color.name
+        ):
+            print(order["size"], order["color"])
             cart.remove(order)
             request.session["cart"] = cart
             break
-        
-        
         
         
