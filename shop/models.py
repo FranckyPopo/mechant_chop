@@ -189,8 +189,8 @@ class Cart(models.Model):
                 ordered=False
             )
         else:
-            defaul_size = product.size.first()
-            defaul_color = product.color.first()
+            defaul_size = product.size.get(name="XL")
+            defaul_color = product.color.get(name="White")
             order, create = Order.objects.get_or_create(
                 user=user,
                 product=product,
@@ -221,7 +221,8 @@ class Cart(models.Model):
         orders.delete()
     
 class ImageProduct(models.Model):
-    image = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="image_product")
+    image = models.ImageField()
 
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
