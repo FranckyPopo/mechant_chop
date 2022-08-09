@@ -41,7 +41,7 @@ class Category(models.Model):
 class SubCategory(models.Model):
     name = models.CharField(max_length=150) 
     active = models.BooleanField(default=True)
-    categories = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
