@@ -80,6 +80,8 @@ class Product(models.Model):
     first_photo = models.ImageField()
     second_photo = models.ImageField()
 
+    
+    sub_category =  models.ForeignKey(SubCategory, on_delete=models.CASCADE, related_name="product_sub_category")
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name="product_brand")
     size = models.ManyToManyField(Size, blank=True, null=True)
     color = models.ManyToManyField(Color, blank=True, null=True)

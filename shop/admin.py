@@ -32,7 +32,7 @@ class Product(admin.ModelAdmin):
     
 @admin.register(models.ImageProduct)
 class ImageProduct(admin.ModelAdmin):
-    list_display = ["product", "image", "date_create", "date_update"]
+    list_display = ["product", "sub_category", "image", "date_create", "date_update"]
     
 @admin.register(models.NewsLater)
 class NewsLater(admin.ModelAdmin):
