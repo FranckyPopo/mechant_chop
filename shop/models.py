@@ -41,14 +41,14 @@ class Category(models.Model):
 class SubCategory(models.Model):
     name = models.CharField(max_length=150) 
     active = models.BooleanField(default=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="sub_category")
     
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)
     date_delete = models.BooleanField(default=False)
     
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.category.name})"
     
 class Size(models.Model):
     name = models.CharField(max_length=150)
@@ -100,6 +100,26 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @classmethod
+    def filter_product(cls, category_pk: int, sub_category_pk: int):
+        qs = cls.objects.filter(active=True)
+        
+        if category_pk and not sub_category_pk:
+            qs = qs.filter(
+                sub_category__category__pk=category_pk,
+                active=True,
+                sub_category__category__active=True
+            )
+        else:
+            qs = qs.filter(
+                sub_category__pk=sub_category_pk,
+                active=True,
+                sub_category__category__active=True
+            )
+            
+        return qs
+        
     
     def get_price_promotion(self) -> int:
         """Cette méthode retourne le prix d'un article aprés
