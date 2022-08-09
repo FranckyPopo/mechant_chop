@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, get_list_or_404, render, redirect
 from django.views.generic import View
 from django.http import HttpRequest, HttpResponse
 from django.template.loader import render_to_string
@@ -135,16 +135,20 @@ def shop_index(request):
 class ShopListProduct(View):
     template_name = "shop/pages/shop.html"
     
-    def get(self, request):
-        products = models.Product.objects.all()
+    def get(self, request: HttpRequest, category_pk: int, sub_category_pk: int):
+        qs = models.Product.filter_product(
+            category_pk=category_pk,
+            sub_category_pk=sub_category_pk
+        )
         
         # Paginator
-        paginator = Paginator(products, 3)
-        page_number = request.GET.get('page')
+        paginator = Paginator(qs, 1)
+        page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
         
         context = {
             "page_obj": page_obj,
+            "categories": models.Category.objects.filter(active=True),
         }
         
         return render(request, self.template_name, context=context)

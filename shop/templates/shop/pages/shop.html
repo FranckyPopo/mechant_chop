@@ -32,57 +32,32 @@
                             <!--  Catagories  -->
                             <div class="catagories-menu">
                                 <ul id="menu-content2" class="menu-content collapse show">
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#clothing">
-                                        <a href="#">clothing</a>
-                                        <ul class="sub-menu collapse show" id="clothing">
-                                            <li><a href="#">All</a></li>
-                                            <li><a href="#">Bodysuits</a></li>
-                                            <li><a href="#">Dresses</a></li>
-                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
-                                            <li><a href="#">Jackets &amp; Coats</a></li>
-                                            <li><a href="#">Jeans</a></li>
-                                            <li><a href="#">Pants &amp; Leggings</a></li>
-                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                                            <li><a href="#">Shirts &amp; Blouses</a></li>
-                                            <li><a href="#">Shirts</a></li>
-                                            <li><a href="#">Sweaters &amp; Knits</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#shoes" class="collapsed">
-                                        <a href="#">shoes</a>
-                                        <ul class="sub-menu collapse" id="shoes">
-                                            <li><a href="#">All</a></li>
-                                            <li><a href="#">Bodysuits</a></li>
-                                            <li><a href="#">Dresses</a></li>
-                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
-                                            <li><a href="#">Jackets &amp; Coats</a></li>
-                                            <li><a href="#">Jeans</a></li>
-                                            <li><a href="#">Pants &amp; Leggings</a></li>
-                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                                            <li><a href="#">Shirts &amp; Blouses</a></li>
-                                            <li><a href="#">Shirts</a></li>
-                                            <li><a href="#">Sweaters &amp; Knits</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#accessories" class="collapsed">
-                                        <a href="#">accessories</a>
-                                        <ul class="sub-menu collapse" id="accessories">
-                                            <li><a href="#">All</a></li>
-                                            <li><a href="#">Bodysuits</a></li>
-                                            <li><a href="#">Dresses</a></li>
-                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
-                                            <li><a href="#">Jackets &amp; Coats</a></li>
-                                            <li><a href="#">Jeans</a></li>
-                                            <li><a href="#">Pants &amp; Leggings</a></li>
-                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                                            <li><a href="#">Shirts &amp; Blouses</a></li>
-                                            <li><a href="#">Shirts</a></li>
-                                            <li><a href="#">Sweaters &amp; Knits</a></li>
-                                        </ul>
-                                    </li>
+                                    {% for category in categories %}
+                                        <!-- Single Item -->
+                                        <li data-toggle="collapse" data-target="#{{category.name}}">
+                                            <a href="#">
+                                                {{ category.name }}
+                                            </a>
+
+                                            <ul class="sub-menu collapse show" id="{{category.name}}">
+                                                <li>
+                                                    <a href="{% url 'shop_list_product' category_pk=category.pk sub_category_pk=0 %}">
+                                                        toute
+                                                    </a>
+                                                </li>
+                                                {% for sub_category in category.sub_category.all %}
+                                                    {% if sub_category.product_sub_category.all.count %}
+                                                        <li>
+                                                            <a href="{% url 'shop_list_product' category_pk=category.pk sub_category_pk=sub_category.pk %}">
+                                                                {{ sub_category.name }}
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </ul>
+
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                         </div>
@@ -170,7 +145,6 @@
                         </div>
 
                         <div class="row">
-
                             {% for instance in page_obj %}
                                 <!-- Single Product -->
                                 <div class="col-12 col-sm-6 col-lg-4">
@@ -235,33 +209,29 @@
                                         </div>
                                     </div>
                                 </div>
-                            
+                            {% empty %}
+                                <h2>Aucun Produit trouvé<h2>
                             {% endfor %}
                         </div>
                     </div>
                     <!-- Pagination -->
                     <nav aria-label="navigation">
-                        
                         <ul class="pagination mt-50 mb-70">
-
-                            
                             {% if page_obj.has_previous %}
-                                <!-- Page précedentes -->
+                                <!-- Première page  -->
                                 <li class="page-item">
                                     <a class="page-link" href="?page=1">
                                         <i class="fa fa-angle-left"></i>
                                     </a>
                                 </li>
                             
-                                <!-- Première page  -->
+                                <!-- Page précedentes -->    
                                 <li class="page-item">
                                     <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
                                         {{ page_obj.previous_page_number }}
                                     </a>
                                 </li>
-                            
                             {% endif %}
-                            
                             
                             {% if page_obj.has_next %}
                                 <!-- Page suivantes -->
@@ -277,10 +247,7 @@
                                         <i class="fa fa-angle-right"></i>
                                     </a>
                                 </li>
-                            {% endif %}
-
-                            
-                            
+                            {% endif %} 
                         </ul>
                     </nav>
                 </div>

@@ -28,11 +28,11 @@ class Color(admin.ModelAdmin):
     
 @admin.register(models.Product)
 class Product(admin.ModelAdmin):
-    list_display = ["name", "brand", "date_create", "date_update"]
+    list_display = ["name", "brand", "sub_category", "date_create", "date_update"]
     
 @admin.register(models.ImageProduct)
 class ImageProduct(admin.ModelAdmin):
-    list_display = ["product", "sub_category", "image", "date_create", "date_update"]
+    list_display = ["product", "image", "date_create", "date_update"]
     
 @admin.register(models.NewsLater)
 class NewsLater(admin.ModelAdmin):
