@@ -16,6 +16,16 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
     
+class GlobalSold(models.Model):
+    name = models.PositiveIntegerField(blank=True, null=True)
+    
+    date_create = models.DateTimeField(auto_now_add=True)
+    date_update = models.DateTimeField(auto_now=True)
+    date_delete = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return self.name
+    
 class Category(models.Model):
     name = models.CharField(max_length=150) 
     active = models.BooleanField(default=True)
@@ -28,8 +38,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
-class GlobalSold(models.Model):
-    name = models.PositiveIntegerField(blank=True, null=True)
+class SubCategory(models.Model):
+    name = models.CharField(max_length=150) 
+    active = models.BooleanField(default=True)
+    categories = models.ForeignKey(Category, on_delete=models.CASCADE)
     
     date_create = models.DateTimeField(auto_now_add=True)
     date_update = models.DateTimeField(auto_now=True)

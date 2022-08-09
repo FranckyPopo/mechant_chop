@@ -10,6 +10,10 @@ class Brand(admin.ModelAdmin):
 class Category(admin.ModelAdmin):
     list_display = ["name", "active", "date_create", "date_update"]
     
+@admin.register(models.SubCategory)
+class SubCategory(admin.ModelAdmin):
+    list_display = ["name", "active", "date_create", "date_update"]
+    
 @admin.register(models.GlobalSold)
 class GlobalSold(admin.ModelAdmin):
     list_display = ["name", "date_create", "date_update"]
