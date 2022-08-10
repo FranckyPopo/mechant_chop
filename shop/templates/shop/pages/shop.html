@@ -34,16 +34,15 @@
                                 <ul id="menu-content2" class="menu-content collapse show">
                                     {% for category in categories %}
                                         <!-- Single Item -->
-
                                         <li data-toggle="collapse" data-target="#{{category.name}}">
                                             <a href="#">{{ category.name }}</a>
 
                                             <ul class="sub-menu collapse show" id="{{category.name}}">
-                                                    <li>
-                                                        <a href="{% url 'shop_list_product' category_pk=category.pk sub_category_pk=0 %}">
-                                                            Tout
-                                                        </a>
-                                                    </li>
+                                                <li>
+                                                    <a href="{% url 'shop_list_product' category_pk=category.pk sub_category_pk=0 %}">
+                                                        Tout
+                                                    </a>
+                                                </li>
                                                 
                                                 {% for sub_category in category.sub_category.all %}
                                                     {% if sub_category.product_sub_category.exists and sub_category.active %}

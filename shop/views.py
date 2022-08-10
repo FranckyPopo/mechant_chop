@@ -148,7 +148,6 @@ class ShopListProduct(View):
         
         context = {
             "page_obj": page_obj,
-            "categories": models.Category.objects.filter(active=True),
         }
         
         return render(request, self.template_name, context=context)

@@ -1,10 +1,13 @@
 
+- Afficher les différentes catégorie et sous categories dans le togle [0]
+- Dynamiser la bare de recherche
+
+
 - Crée une action qui permet de d'activer et de désactiver un objet
 - Ajout l'utilisateur dans la newslater
-- Afficher une allet quand on supprimer un produit du panier
-
-
-
+- Afficher une allert quand on supprimer un produit du panier
+- Dynamiser le front via les models
+- Dynamiser la page contact
 
 
 Avant d'executer le projet lors de la présentation

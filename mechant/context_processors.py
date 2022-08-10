@@ -3,8 +3,8 @@ from django.template.loader import render_to_string
 from shop import models, utils
 
 
-def list_category(request):
-    return {"categories": models.Category.objects.all().filter(active=True)}
+def list_categories(request):
+    return {"categories": models.Category.objects.filter(active=True)}
 
 
 def list_product(request):
@@ -49,3 +49,4 @@ def cart(request):
     
     return {"cart": cart}
     
+
