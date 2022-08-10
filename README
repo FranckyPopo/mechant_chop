@@ -4,6 +4,10 @@
 - Modifier l'affichage des toasts [x]
 - Afficher une allet quand on supprimer un produit du panier
 - Dynamiser La page shop
+    - Supprimer les filtre prix, marque et couleur [x]
+    - Afficher unique les catégories qui on des sous catégories qui on produit
+    - Filtrer les produit via sort by 
+
 
 
 
