@@ -13,7 +13,6 @@ from mechant import context_processors
 
 
 class ProductAddCart(View):
-    http_method_names = ["post"]
     template_name = "shop/pages/cart-list.html"
     
     def post(self, request, product_pk):        
@@ -79,11 +78,6 @@ class ProductDeleteCart(View):
         
     def http_method_not_allowed(self, request):
         return redirect("shop_index")
-    
-        
-
-    def http_method_not_allowed(self, request):
-        return redirect("shop_index")
 
 class FavouriteProuct(LoginRequiredMixin, View):
     
@@ -128,10 +122,9 @@ class ShopDetailProduct(View):
         
         return render(request, self.template_name, context=context)
     
-def shop_index(request):
-    return render(request, "shop/pages/index.html")
-
-
+    def http_method_not_allowed(self, request):
+        return redirect("shop_index")
+    
 class ShopListProduct(View):
     template_name = "shop/pages/shop.html"
     
@@ -152,12 +145,34 @@ class ShopListProduct(View):
         
         return render(request, self.template_name, context=context)
     
-    def post(self, request):
-        pass
+    def http_method_not_allowed(self, request):
+        return redirect("shop_index")
+
+class SearchProduct(View):
+    template_name = "shop/pages/shop.html"
+    
+    def get(self, request):
+        search = request.GET.get("search")
+        print(dir(request.GET))
+        if search:
+            products = models.Product.objects.filter(name__icontains=search)
+
+        # Paginator
+        paginator = Paginator(products, 1)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        
+        context = {
+            "page_obj": page_obj,
+        }
+        
+        return render(request, self.template_name, context=context)
     
     def http_method_not_allowed(self, request):
         return redirect("shop_index")
 
+def shop_index(request):
+    return render(request, "shop/pages/index.html")
 
 def shop_checkout(request):
     return render(request, "shop/pages/checkout.html")

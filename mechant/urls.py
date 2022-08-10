@@ -16,6 +16,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.shop_index, name="shop_index"),
     path('list-product/<int:category_pk>/<int:sub_category_pk>/', views.ShopListProduct.as_view(), name="shop_list_product"),
+    path('search-product/', views.SearchProduct.as_view(), name="shop_search_product"),
     path('checkout/', views.shop_checkout, name="shop_checkout"),
     path('contact/', front_contact, name="shop_contact"),
     

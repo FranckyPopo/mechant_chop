@@ -50,4 +50,3 @@ htmx.on("product_delete", function (e){
 
     span_tota_price_cart.innerHTML = e.detail.tota_price_cart.total_price_cart  + " XOF"
 });
-
