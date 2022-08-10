@@ -4,6 +4,8 @@ from django.conf import settings
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404
 
+from pprint import pprint
+
 class Brand(models.Model):
     name = models.CharField(max_length=150)
     image = models.ImageField()
@@ -101,7 +103,19 @@ class Product(models.Model):
         return self.name
     
     @classmethod
-    def filter_product(cls, category_pk: int, sub_category_pk: int):
+    def filter_product(cls, category_pk: int, sub_category_pk: int) -> models.QuerySet:
+        
+        """
+        Cette méthode retourne un qs qui a été filtré 
+
+        Args:
+            category_pk (int): pk de la catégory a filtrer
+            sub_category_pk (int): pk de la sous catégory a filter
+
+        Returns:
+            (models.QuerySet): nouveau QuerySet
+        """
+        
         qs = cls.objects.filter(
             active=True,
             sub_category__active=True,
@@ -226,8 +240,8 @@ class Cart(models.Model):
                 ordered=False
             )
         else:
-            defaul_size = product.size.get(name="XL")
-            defaul_color = product.color.get(name="White")
+            defaul_size = Size.objects.get(name="XL")
+            defaul_color = Color.objects.get(name="White")
             order, create = Order.objects.get_or_create(
                 user=user,
                 product=product,
