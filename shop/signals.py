@@ -56,7 +56,7 @@ def active_category(instance: models.SubCategory, **kwargs):
     sub_categories = category.sub_category.filter(active=True)
     
     for sub_category in sub_categories:
-        if sub_category.product_sub_category.all():
+        if sub_category.product_sub_category.exists():
             category.active = True
             break
     else:
